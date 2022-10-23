@@ -7,7 +7,7 @@ from fastapi_jwt_auth import AuthJWT
 from starlette import status
 
 from src.api.v1.schemas.materials import MaterialListResponse, MaterialModel, \
-    MaterialCreate
+    MaterialCreate, ReportListResponse
 from src.services.material import MaterialService, get_material_service
 from src.services.user import UserService, get_user_service
 
@@ -53,6 +53,27 @@ def material_list(
         # Если показатели не найдены, отдаём 404 статус
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail="Materials not found")
     return MaterialListResponse(**materials)
+
+
+@router.get(
+    path="/report",
+    response_model=ReportListResponse,
+    summary="Список показателей",
+    tags=["Materials"],
+)
+def report_list(
+        material_service: MaterialService = Depends(get_material_service),
+        filter: Optional[FilterMonth] = None,
+) -> ReportListResponse:
+    if not filter:
+        filter = ""
+    else:
+        filter = filter.value
+    materials: dict = material_service.get_material_list_for_report(filter)
+    if not materials:
+        # Если показатели не найдены, отдаём 404 статус
+        raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail="Materials not found")
+    return ReportListResponse(**materials)
 
 
 @router.get(

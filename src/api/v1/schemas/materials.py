@@ -29,3 +29,7 @@ class MaterialModel(MaterialBase):
 
 class MaterialListResponse(BaseModel):
     Materials: list[MaterialModel] = []
+
+
+class ReportListResponse(BaseModel):
+    Materials: list[dict] = []
