@@ -16,6 +16,7 @@ class MaterialBase(BaseModel):
     aluminum_amount: float
     sodium_amount: float
     sulfur_amount: float
+    month: str
 
 
 class MaterialCreate(MaterialBase):
@@ -24,7 +25,6 @@ class MaterialCreate(MaterialBase):
 
 class MaterialModel(MaterialBase):
     id: int
-    created_at: datetime
 
 
 class MaterialListResponse(BaseModel):

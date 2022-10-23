@@ -52,7 +52,7 @@ def upgrade() -> None:
                     sa.Column('aluminum_amount', sa.Float(), default=0),
                     sa.Column('sodium_amount', sa.Float(), default=0),
                     sa.Column('sulfur_amount', sa.Float(), default=0),
-                    sa.Column('created_at', sa.DateTime(), nullable=False),
+                    sa.Column('month', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
                     sa.PrimaryKeyConstraint('id')
                     )
     # ### end Alembic commands ###

@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi_jwt_auth.exceptions import AuthJWTException
 from fastapi.responses import JSONResponse
 from fastapi import Request
-from src.api.v1.resources import posts, users, materials
+from src.api.v1.resources import users, materials
 from src.core import config
 from src.db import cache, redis_cache
 
@@ -48,7 +48,6 @@ def shutdown():
 
 
 # Подключаем роутеры к серверу
-app.include_router(router=posts.router, prefix="/api/v1/posts")
 app.include_router(router=materials.router, prefix="/api/v1/materials")
 app.include_router(router=users.router, prefix="/api/v1")
 

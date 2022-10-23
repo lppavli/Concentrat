@@ -14,4 +14,4 @@ class Material(SQLModel, table=True):
     aluminum_amount: float = Field(default=0)
     sodium_amount: float = Field(default=0)
     sulfur_amount: float = Field(default=0)
-    created_at: datetime = Field(default=datetime.utcnow(), nullable=False)
+    month: str = Field(nullable=False)
