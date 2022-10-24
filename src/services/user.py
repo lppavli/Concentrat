@@ -8,7 +8,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from src.api.v1.schemas.users import UserCreate, UserLogin, UserAbout, UserUpdate
 from src.core.auth_config import blocked_access_tokens, settings, active_refresh_tokens
 
-from src.core.config import JWT_ALGORITHM, JWT_SECRET_KEY
 from src.db import AbstractCache, get_cache, get_session
 from src.models import User
 from src.services import ServiceMixin

@@ -4,9 +4,12 @@ from fastapi import FastAPI
 from fastapi_jwt_auth.exceptions import AuthJWTException
 from fastapi.responses import JSONResponse
 from fastapi import Request
+
+from custom_openapi import custom_openapi
 from src.api.v1.resources import users, materials
 from src.core import config
 from src.db import cache, redis_cache
+
 
 app = FastAPI(
     # Конфигурируем название проекта. Оно будет отображаться в документации
@@ -18,11 +21,11 @@ app = FastAPI(
     # Адрес документации в формате OpenAPI
     openapi_url="/api/openapi.json",
 )
+app.openapi = custom_openapi(app)
 
 
 @app.exception_handler(AuthJWTException)
 def authjwt_exception_handler(request: Request, exc: AuthJWTException):
-    print(request.headers)
     return JSONResponse(status_code=exc.status_code, content={"detail": exc.message})
 
 

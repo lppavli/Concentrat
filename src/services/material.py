@@ -1,7 +1,5 @@
 import json
-from enum import Enum
 from functools import lru_cache
-from statistics import mean
 from typing import Optional
 
 from fastapi import Depends
@@ -13,21 +11,6 @@ from src.models import Material
 from src.services import ServiceMixin
 
 __all__ = ("MaterialService", "get_material_service")
-
-
-class Month(str, Enum):
-    january = "January"
-    february = "February"
-    march = "March"
-    april = "April"
-    may = "May"
-    june = "June"
-    july = "July"
-    august = "August"
-    september = "September"
-    october = "October"
-    november = "November"
-    december = "December"
 
 
 class MaterialService(ServiceMixin):
@@ -42,8 +25,6 @@ class MaterialService(ServiceMixin):
         """Получить список показателей для отчета."""
         materials = self.session.query(Material).filter(
             Material.month == filt).all()
-        print('-------------')
-        print(materials)
         m = {"iron_amount": [item.iron_amount for item in materials],
              "silicon_amount": [item.silicon_amount for item in materials],
              "aluminum_amount": [item.aluminum_amount for item in materials],
