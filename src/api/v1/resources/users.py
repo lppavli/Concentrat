@@ -2,7 +2,6 @@ from fastapi import APIRouter, Depends, HTTPException
 from starlette import status
 
 from src.api.v1.schemas.users import UserCreate, UserLogin, UserUpdate
-from src.services import PostService, get_post_service
 from src.services.user import get_user_service, UserService
 from fastapi_jwt_auth import AuthJWT
 

@@ -1,6 +1,4 @@
-
 import json
-from datetime import datetime
 from functools import lru_cache
 from typing import Optional
 
@@ -18,19 +16,41 @@ __all__ = ("MaterialService", "get_material_service")
 class MaterialService(ServiceMixin):
     def get_material_list(self, filt: str) -> dict:
         """Получить список показателей."""
-        print(type(Material.created_at), Material.created_at)
-        materials = self.session.query(Material).filter(Material.created_at == "2022-10-23 12:47:07.456").all()
-        return {"Materials": [MaterialModel(**material.dict()) for material in materials]}
+        materials = self.session.query(Material).filter(
+            Material.month == filt).all()
+        return {"Materials": [MaterialModel(**material.dict()) for material in
+                              materials]}
+
+    def get_material_list_for_report(self, filt: str) -> dict:
+        """Получить список показателей для отчета."""
+        materials = self.session.query(Material).filter(
+            Material.month == filt).all()
+        m = {"iron_amount": [item.iron_amount for item in materials],
+             "silicon_amount": [item.silicon_amount for item in materials],
+             "aluminum_amount": [item.aluminum_amount for item in materials],
+             "sodium_amount": [item.sodium_amount for item in materials],
+             "sulfur_amount": [item.sulfur_amount for item in materials]}
+        reports = []
+        for key, value in m.items():
+            reports.append(
+                {"value": key,
+                 "min_value": min(value),
+                 "max_value": max(value)}
+            )
+        return {"Materials": [report for report in
+                              reports]}
+
 
     def get_material_detail(self, item_id: int) -> Optional[dict]:
         """Получить детальную информацию показателя."""
         if cached_Material := self.cache.get(key=f"{item_id}"):
             return json.loads(cached_Material)
 
-        material = self.session.query(Material).filter(Material.id == item_id).first()
-        if Material:
-            self.cache.set(key=f"{Material.id}", value=Material.json())
-        return Material.dict() if Material else None
+        material = self.session.query(Material).filter(
+            Material.id == item_id).first()
+        if material:
+            self.cache.set(key=f"{material.id}", value=material.json())
+        return material.dict() if material else None
 
     def create_material(self, material: MaterialCreate) -> dict:
         """Создать показатель."""
@@ -40,8 +60,8 @@ class MaterialService(ServiceMixin):
             silicon_amount=material.silicon_amount,
             aluminum_amount=material.aluminum_amount,
             sodium_amount=material.sodium_amount,
-            sulfur_amount=material.sulfur_amount
-
+            sulfur_amount=material.sulfur_amount,
+            month=material.month
         )
         self.session.add(new_material)
         self.session.commit()
@@ -51,7 +71,7 @@ class MaterialService(ServiceMixin):
 
 @lru_cache()
 def get_material_service(
-    cache: AbstractCache = Depends(get_cache),
-    session: Session = Depends(get_session),
+        cache: AbstractCache = Depends(get_cache),
+        session: Session = Depends(get_session),
 ) -> MaterialService:
     return MaterialService(cache=cache, session=session)
