@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<meta charset="UTF-8">
+
+<h2 align="center">Works log</h2>
+
+
+<div class="table_container">
+
+
+    <table class="my_table">
+        <tr class="my_row">
+            <td class="title" width="400px" bgcolor="#dddddd">Название</td>
+            <td class="title" width="150px" bgcolor="#dddddd">Количество железа</td>
+            <td class="title" width="100px" bgcolor="#dddddd" align="center">Количество кремния</td>
+            <td class="title" width="200px" bgcolor="#dddddd" align="center">Количество алюминия</td>
+            <td class="title" width="200px" bgcolor="#dddddd" align="center">Количество натрия</td>
+            <td class="title" width="100px" bgcolor="#dddddd" align="center">Количество серы</td>
+            <td class="title" width="100px" bgcolor="#dddddd" align="center">Месяц</td>
+        </tr>
+        {% for mat in material_list %}
+        <tr class="my_row">
+            <td class="ordinary" bgcolor="#eeeeff">{{ mat.name }}</td>
+            <td class="ordinary" bgcolor="#eeeeff">{{ mat.iron_amount }}</td>
+            <td class="ordinary" bgcolor="#eeeeff" align="center">{{ mat.silicon_amount }}</td>
+            <td class="ordinary" bgcolor="#eeeeff" align="center">{{ mat.aluminium_amount }}</td>
+            <td class="ordinary" bgcolor="#eeeeff" align="center">{{ mat.sodium_amount }}</td>
+            <td class="ordinary" bgcolor="#eeeeff" align="center">{{ mat.sulfur_amount}}</td>
+            <td class="ordinary" bgcolor="#eeeeff" align="center">{{ mat.month }}</td>
+
+
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+<br>
+
+
+
+
+
+{% endblock %}

@@ -16,10 +16,13 @@ __all__ = ("MaterialService", "get_material_service")
 class MaterialService(ServiceMixin):
     def get_material_list(self, filt: str) -> dict:
         """Получить список показателей."""
-        materials = self.session.query(Material).filter(
-            Material.month == filt).all()
-        return {"Materials": [MaterialModel(**material.dict()) for material in
-                              materials]}
+        if not filt:
+            materials = self.session.query(Material).all()
+        else:
+            materials = self.session.query(Material).filter(
+                Material.month == filt).all()
+        return [MaterialModel(**material.dict()) for material in
+                              materials]
 
     def get_material_list_for_report(self, filt: str) -> dict:
         """Получить список показателей для отчета."""

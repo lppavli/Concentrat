@@ -1,10 +1,11 @@
 import enum
 from http import HTTPStatus
 from typing import Optional
-
+from fastapi import  Request
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi_jwt_auth import AuthJWT
 from starlette import status
+from starlette.templating import Jinja2Templates
 
 from src.api.v1.schemas.materials import MaterialListResponse, MaterialModel, \
     MaterialCreate, ReportListResponse
@@ -12,7 +13,7 @@ from src.services.material import MaterialService, get_material_service
 from src.services.user import UserService, get_user_service
 
 router = APIRouter()
-
+templates = Jinja2Templates(directory="templates")
 
 class EnumStrMixin(enum.Enum):
     def __str__(self) -> str:
@@ -41,6 +42,7 @@ class FilterMonth(EnumStrMixin):
     tags=["Materials"],
 )
 def material_list(
+        request: Request,
         material_service: MaterialService = Depends(get_material_service),
         filter: Optional[FilterMonth] = None,
 ) -> MaterialListResponse:
@@ -48,12 +50,13 @@ def material_list(
         filter = ""
     else:
         filter = filter.value
-    materials: dict = material_service.get_material_list(filter)
-    if not materials:
-        # Если показатели не найдены, отдаём 404 статус
-        raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail="Materials not found")
-    return MaterialListResponse(**materials)
-
+    materials: list = material_service.get_material_list(filter)
+    # if not materials:
+    #     # Если показатели не найдены, отдаём 404 статус
+    #     raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail="Materials not found")
+    # return MaterialListResponse(**materials)
+    return templates.TemplateResponse("materials.html",
+                                      {"request": request, "material_list": materials})
 
 @router.get(
     path="/report",
