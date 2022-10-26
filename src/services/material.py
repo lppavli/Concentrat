@@ -16,8 +16,11 @@ __all__ = ("MaterialService", "get_material_service")
 class MaterialService(ServiceMixin):
     def get_material_list(self, filt: str) -> dict:
         """Получить список показателей."""
-        materials = self.session.query(Material).filter(
-            Material.month == filt).all()
+        if filt:
+            materials = self.session.query(Material).filter(
+                Material.month == filt).all()
+        else:
+            materials = self.session.query(Material).all()
         return {"Materials": [MaterialModel(**material.dict()) for material in
                               materials]}
 

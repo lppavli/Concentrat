@@ -21,7 +21,7 @@ app = FastAPI(
     # Адрес документации в формате OpenAPI
     openapi_url="/api/openapi.json",
 )
-app.openapi = custom_openapi(app)
+# app.openapi = custom_openapi(app)
 
 
 @app.exception_handler(AuthJWTException)
