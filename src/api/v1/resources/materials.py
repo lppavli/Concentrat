@@ -36,23 +36,22 @@ class FilterMonth(EnumStrMixin):
 
 @router.get(
     path="/",
-    response_model=MaterialListResponse,
     summary="Список показателей",
     tags=["Materials"],
 )
 def material_list(
         material_service: MaterialService = Depends(get_material_service),
         filter: Optional[FilterMonth] = None,
-) -> MaterialListResponse:
+) -> list:
     if not filter:
         filter = ""
     else:
         filter = filter.value
-    materials: dict = material_service.get_material_list(filter)
+    materials: list = material_service.get_material_list(filter)
     if not materials:
         # Если показатели не найдены, отдаём 404 статус
         raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail="Materials not found")
-    return MaterialListResponse(**materials)
+    return materials
 
 
 @router.get(
