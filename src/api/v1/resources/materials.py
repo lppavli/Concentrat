@@ -1,7 +1,7 @@
 import enum
 from http import HTTPStatus
 from typing import Optional
-from fastapi import  Request
+from fastapi import Request
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi_jwt_auth import AuthJWT
 from starlette import status

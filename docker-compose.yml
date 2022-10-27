@@ -1,20 +1,20 @@
 version: '3.8'
 
 services:
-  app:
-    container_name: app
-    build:
-      context: .
-      dockerfile: Dockerfile
-    env_file:
-      - example.env
-    networks:
-      - my_network
-    ports:
-      - "8000:8000"
-    depends_on:
-      - redis
-      - postgres
+#  app:
+#    container_name: app
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+#    env_file:
+#      - example.env
+#    networks:
+#      - my_network
+#    ports:
+#      - "8000:8000"
+#    depends_on:
+#      - redis
+#      - postgres
 
   redis:
     container_name: redis

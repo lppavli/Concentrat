@@ -51,8 +51,8 @@ def shutdown():
 
 
 # Подключаем роутеры к серверу
-app.include_router(router=materials.router, prefix="/api/v1/materials")
-app.include_router(router=users.router, prefix="/api/v1")
+app.include_router(router=materials.router, prefix="/materials")
+app.include_router(router=users.router, prefix="")
 
 
 if __name__ == "__main__":

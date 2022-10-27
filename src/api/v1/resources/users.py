@@ -1,10 +1,14 @@
 from fastapi import APIRouter, Depends, HTTPException
 from starlette import status
-
+from fastapi import  Request
 from src.api.v1.schemas.users import UserCreate, UserLogin, UserUpdate
 from src.services.user import get_user_service, UserService
 from fastapi_jwt_auth import AuthJWT
+from starlette.templating import Jinja2Templates
 
+from webapp.loginform import LoginForm
+
+templates = Jinja2Templates(directory="templates")
 router = APIRouter()
 
 
@@ -21,6 +25,9 @@ def user_signup(
     res = user_service.create_user(user=user)
     return res
 
+@router.get("/login")
+async def login(request: Request):
+    return templates.TemplateResponse("login.html", {"request": request})
 
 @router.post(
     path="/login",
@@ -28,11 +35,25 @@ def user_signup(
     tags=["users"],
 )
 def user_login(
+    request: Request,
     user: UserLogin,
     user_service: UserService = Depends(get_user_service),
     Authorize: AuthJWT = Depends(),
 ):
-    return user_service.login(Authorize, user)
+    form = LoginForm(request)
+    form.load_data()
+    if form.is_valid():
+        try:
+            form.__dict__.update(msg="Login Successful :)")
+            response = templates.TemplateResponse("/login.html",
+                                                  form.__dict__)
+            return user_service.login(Authorize, user)
+        except HTTPException:
+            form.__dict__.update(msg="")
+            form.__dict__.get("errors").append("Incorrect Email or Password")
+            return templates.TemplateResponse("login.html", form.__dict__)
+    return templates.TemplateResponse("login.html", form.__dict__)
+
 
 
 @router.post(
