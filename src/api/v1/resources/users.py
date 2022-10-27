@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Form
 from starlette import status
 from fastapi import  Request
 from src.api.v1.schemas.users import UserCreate, UserLogin, UserUpdate
@@ -41,13 +41,14 @@ def user_login(
     Authorize: AuthJWT = Depends(),
 ):
     form = LoginForm(request)
-    form.load_data()
-    if form.is_valid():
+    await form.load_data()
+    if await form.is_valid():
         try:
             form.__dict__.update(msg="Login Successful :)")
-            response = templates.TemplateResponse("/login.html",
+            response = templates.TemplateResponse("login.html",
                                                   form.__dict__)
-            return user_service.login(Authorize, user)
+            user_service.login(Authorize, user=response)
+            return response
         except HTTPException:
             form.__dict__.update(msg="")
             form.__dict__.get("errors").append("Incorrect Email or Password")
