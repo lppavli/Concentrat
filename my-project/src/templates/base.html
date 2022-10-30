@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <title>{{title}}</title>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-light bg-light">
+        <h1>Показатели железорудного концентрата</h1>
+        <p>
+            <a class="btn btn-success" href="/login">Log in</a>
+        </p>
+
+        <a class="navbar-brand" href="#">Mars One</a>
+    </nav>
+</header>
+<!-- Begin page content -->
+<main role="main" class="container">
+
+<div class="table_container">
+
+
+    <table class="my_table">
+        <tr class="my_row">
+            <td class="title" width="400px" bgcolor="#dddddd">Название</td>
+            <td class="title" width="150px" bgcolor="#dddddd">Количество железа</td>
+            <td class="title" width="100px" bgcolor="#dddddd" align="center">Количество кремния</td>
+            <td class="title" width="200px" bgcolor="#dddddd" align="center">Количество алюминия</td>
+            <td class="title" width="200px" bgcolor="#dddddd" align="center">Количество натрия</td>
+            <td class="title" width="100px" bgcolor="#dddddd" align="center">Количество серы</td>
+            <td class="title" width="100px" bgcolor="#dddddd" align="center">Месяц</td>
+        </tr>
+        {% for mat in material_list %}
+        <tr class="my_row">
+            <td class="ordinary" bgcolor="#eeeeff">{{ mat.name }}</td>
+            <td class="ordinary" bgcolor="#eeeeff">{{ mat.iron_amount }}</td>
+            <td class="ordinary" bgcolor="#eeeeff" align="center">{{ mat.silicon_amount }}</td>
+            <td class="ordinary" bgcolor="#eeeeff" align="center">{{ mat.aluminium_amount }}</td>
+            <td class="ordinary" bgcolor="#eeeeff" align="center">{{ mat.sodium_amount }}</td>
+            <td class="ordinary" bgcolor="#eeeeff" align="center">{{ mat.sulfur_amount}}</td>
+            <td class="ordinary" bgcolor="#eeeeff" align="center">{{ mat.month }}</td>
+
+
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+<br>
+
+</main>
+</body>
+</html>

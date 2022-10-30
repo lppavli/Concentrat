@@ -4,6 +4,7 @@ from fastapi import FastAPI
 from fastapi_jwt_auth.exceptions import AuthJWTException
 from fastapi.responses import JSONResponse
 from fastapi import Request
+from starlette.middleware.cors import CORSMiddleware
 
 from custom_openapi import custom_openapi
 from src.api.v1.resources import users, materials
@@ -22,7 +23,16 @@ app = FastAPI(
     openapi_url="/api/openapi.json",
 )
 # app.openapi = custom_openapi(app)
-
+origins = [
+"http://localhost:8080",
+]
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.exception_handler(AuthJWTException)
 def authjwt_exception_handler(request: Request, exc: AuthJWTException):
