@@ -1,4 +1,6 @@
 from functools import lru_cache
+from http import HTTPStatus
+from fastapi import HTTPException
 from typing import Optional
 
 import jwt
@@ -74,15 +76,21 @@ class UserService(ServiceMixin):
         access_token = _jwt.create_access_token(subject=user.username)
         return {"user": res, "access_token": access_token}
 
-    def login(self, _jwt, user: UserLogin) -> dict:
+    def login(self, _jwt, user: UserLogin):
         """Войти в аккаунт"""
         check_user = (
             self.session.query(User).filter(User.username == user.username).first()
         )
         if not check_user:
-            return {"error": "User not exists."}
+            raise HTTPException(
+                status_code=HTTPStatus.BAD_REQUEST, detail="User not exists."
+            )
+            # return {"error": "User not exists."}
         if not check_password_hash(check_user.password, user.password):
-            return {"error": "Password is invalid"}
+            raise HTTPException(
+                status_code=HTTPStatus.BAD_REQUEST, detail="Password is invalid"
+            )
+            # return {"error": "Password is invalid"}
         user_uuid = (
             self.session.query(User)
             .filter(User.username == check_user.username)

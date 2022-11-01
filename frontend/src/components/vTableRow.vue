@@ -7,7 +7,7 @@
       }}
     </td>
     <td class="ordinary" bgcolor="#eeeeff" align="center">
-      {{ row_data.aluminium_amount }}
+      {{ row_data.aluminum_amount }}
     </td>
     <td class="ordinary" bgcolor="#eeeeff" align="center">{{
         row_data.sodium_amount

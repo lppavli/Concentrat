@@ -4,22 +4,22 @@
     <div class="table_container">
       <table class="my_table">
         <tr class="my_row">
-          <td class="title" width="400px" bgcolor="#dddddd">Название</td>
-          <td class="title" width="150px" bgcolor="#dddddd">Количество железа
+          <td class="title" width="180px" bgcolor="#dddddd">Название</td>
+          <td class="title" width="170px" bgcolor="#dddddd">Количество железа
           </td>
-          <td class="title" width="100px" bgcolor="#dddddd" align="center">
+          <td class="title" width="170px" bgcolor="#dddddd" align="center">
             Количество кремния
           </td>
-          <td class="title" width="200px" bgcolor="#dddddd" align="center">
+          <td class="title" width="170px" bgcolor="#dddddd" align="center">
             Количество алюминия
           </td>
-          <td class="title" width="200px" bgcolor="#dddddd" align="center">
+          <td class="title" width="170px" bgcolor="#dddddd" align="center">
             Количество натрия
           </td>
-          <td class="title" width="100px" bgcolor="#dddddd" align="center">
+          <td class="title" width="170px" bgcolor="#dddddd" align="center">
             Количество серы
           </td>
-          <td class="title" width="100px" bgcolor="#dddddd" align="center">
+          <td class="title" width="170px" bgcolor="#dddddd" align="center">
             Месяц
           </td>
         </tr>
@@ -61,13 +61,13 @@ export default {
   },
   data() {
     return {
-      materialsPerPage: 2,
+      materialsPerPage: 20,
       pageNumber: 1,
     }
   },
   computed: {
     pages() {
-      return Math.ceil(this.materials_data.length / 2)
+      return Math.ceil(this.materials_data.length / 20)
     },
     paginatedMaterials() {
       let from= (this.pageNumber - 1) * this.materialsPerPage;

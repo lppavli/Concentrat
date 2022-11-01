@@ -3,7 +3,7 @@ import { createStore } from 'vuex'
 import axios from "axios";
 
 
-const store = createStore({
+const storem = createStore({
     state: {
         materials: []
     },
@@ -29,4 +29,4 @@ const store = createStore({
     }
 })
 
-export default store;
+export default storem;

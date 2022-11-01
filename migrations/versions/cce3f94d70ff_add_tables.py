@@ -47,11 +47,11 @@ def upgrade() -> None:
                     sa.Column('id', sa.Integer(), nullable=False),
                     sa.Column('name', sqlmodel.sql.sqltypes.AutoString(),
                               nullable=False),
-                    sa.Column('iron_amount', sa.Float(), default=0),
-                    sa.Column('silicon_amount', sa.Float(), default=0),
-                    sa.Column('aluminum_amount', sa.Float(), default=0),
-                    sa.Column('sodium_amount', sa.Float(), default=0),
-                    sa.Column('sulfur_amount', sa.Float(), default=0),
+                    sa.Column('iron_amount', sa.Float(), default=0, nullable=True),
+                    sa.Column('silicon_amount', sa.Float(), default=0, nullable=True),
+                    sa.Column('aluminum_amount', sa.Float(), default=0, nullable=True),
+                    sa.Column('sodium_amount', sa.Float(), default=0, nullable=True),
+                    sa.Column('sulfur_amount', sa.Float(), default=0, nullable=True),
                     sa.Column('month', sqlmodel.sql.sqltypes.AutoString(), nullable=False),
                     sa.PrimaryKeyConstraint('id')
                     )

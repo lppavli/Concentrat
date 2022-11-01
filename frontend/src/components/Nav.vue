@@ -2,14 +2,21 @@
   <header>
     <nav class="navbar navbar-light bg-light">
         <h1>Показатели железорудного концентрата</h1>
-        <p v-if="!user">
+
+      <p v-if="user" :key="user">
+            <a class="btn btn-success" href="/add">Добавить показатель</a>
+        </p>
+      <p v-if="user" :key="user">
+            <a class="btn btn-success" href="/report">Отчет по показателям</a>
+        </p>
+              <p v-if="!user" :key="user">
             <a class="btn btn-success" href="/login">Войти</a>
         </p>
-      <p v-if="user">
+      <p v-if="user" :key="user">
             <a class="btn btn-success" href="/logout">Выйти</a>
         </p>
 
-        <a class="navbar-brand" href="#">Username</a>
+
     </nav>
 </header>
 <!--<materials></materials>-->
@@ -20,15 +27,13 @@
 export default {
   name: 'Nav',
   data() {
+    let isLoggedIn = localStorage.getItem('token') || ""
+    if (isLoggedIn) {
     return {
-      user: '',
-    };
+      user: true,
+    } } else return {user: false};
   },
-  mounted() {
-    if (localStorage.jwtToken) {
-      this.user = localStorage.jwtToken
-    }
-  }
+
 }
 </script>
 

@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Optional
 
 from pydantic import BaseModel
 
@@ -11,11 +12,11 @@ __all__ = (
 
 class MaterialBase(BaseModel):
     name: str
-    iron_amount: float
-    silicon_amount: float
-    aluminum_amount: float
-    sodium_amount: float
-    sulfur_amount: float
+    iron_amount: Optional[float] = 0
+    silicon_amount: Optional[float] = 0
+    aluminum_amount: Optional[float] = 0
+    sodium_amount: Optional[float] = 0
+    sulfur_amount: Optional[float] = 0
     month: str
 
 
